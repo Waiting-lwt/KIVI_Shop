@@ -8,10 +8,10 @@
         销售报表
       </a>
       <a class="nav-left-item" href="/user/seller/browseLog">
-        客户浏览日志
+        顾客浏览日志
       </a>
       <a class="nav-left-item" href="/user/seller/orderLog">
-        客户购买日志
+        顾客购买日志
       </a>
     </div>
     <router-view></router-view>

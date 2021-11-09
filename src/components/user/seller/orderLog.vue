@@ -2,23 +2,25 @@
   <div id="orderLog">
     <div class="title">
       <div class="title-goodInfo">商品信息</div>
-      <div class="title-userInfo">用户信息</div>
-      <div class="title-orderNum">交易时间</div>
-      <div class="title-orderNum">单价</div>
+      <div class="title-userInfo">买家</div>
+      <div class="title-orderTime">交易时间</div>
+      <div class="title-orderPrice">单价</div>
       <div class="title-orderNum">数量</div>
-      <div class="title-orderNum">金额</div>
+      <div class="title-orderPrice">金额</div>
     </div>
 
     <div class="cart-list">
       <div class="cart-item" v-for="(item, index) in ordersList" :key="index">
-        <div class="item-img" @click="toGoodDetail(item.goodId)">
-          <img class="item-pic" mode="scaleToFill" :src="item.goodImg"/>
+        <div class="item-img" @click="toGoodDetail(item.userOrder.goodId)">
+          <img class="item-pic" mode="scaleToFill" :src="item.userOrder.goodImg"/>
         </div>
         <div class="item-block">
-          <div class="item-name">{{item.goodName}}</div>
-          <div class="item-price">￥ {{item.goodPrice}}</div>
-          <div class="item-num">{{item.goodNum}}</div>
-          <div class="item-prices">￥ {{item.goodPrice*item.goodNum}}</div>
+          <div class="item-name" @click="toGoodDetail(item.userOrder.goodId)">{{item.userOrder.goodName}}</div>
+          <div class="item-userInfo" @click="toBuyer(item.buyerId)">{{item.buyerName}}</div>
+          <div class="item-orderTime">{{item.orderTime}}</div>
+          <div class="item-price">￥ {{item.userOrder.goodPrice}}</div>
+          <div class="item-orderNum">{{item.userOrder.goodNum}}</div>
+          <div class="item-prices">￥ {{item.userOrder.goodPrice*item.userOrder.goodNum}}</div>
         </div>
       </div>
 
@@ -64,7 +66,7 @@ export default {
         method: 'GET',
         url: '/user/getSellerOrder',
         params: {
-          userId: this.userId
+          sellerId: this.userId
         }
       }
       this.$request(data).then(res => {
@@ -82,10 +84,18 @@ export default {
         }
       })
     },
+    toBuyer (buyerId) {
+      this.$router.push({
+        name: `user_buyer`,
+        params: {
+          goodId: buyerId
+        }
+      })
+    },
     totalPrice () {
       var totalPrice = 0
       this.ordersList.forEach(function (item) {
-        totalPrice += item.goodPrice * item.goodNum
+        totalPrice += item.userOrder.goodPrice * item.userOrder.goodNum
       })
       return totalPrice
     }
@@ -142,10 +152,16 @@ export default {
   width: 20rem;
 }
 .title-userInfo{
-  width: 10rem;
+  width: 8rem;
+}
+.title-orderTime{
+  width: 8rem;
 }
 .title-orderNum{
-  width: 10rem;
+  width: 5rem;
+}
+.title-orderPrice{
+  width: 8rem;
 }
 
 .cart-list{
@@ -157,25 +173,14 @@ export default {
   margin: 1rem 0rem 1rem 0;
   padding: 1rem 1rem 1rem 1rem;
   width: 58rem;
-  height: 6rem;
+  height: 5rem;
   position: relative;
   border: 1px solid #b9bbbe;
 }
-.item-selected{
-  display: block;
-  margin: 0rem 1rem 0rem 0rem;
-  width: .7rem;
-  height: .7rem;
-  border: 1px solid #6c8299;
-  color: #a80024;
-  font-size: .8rem;
-  font-weight: 900;
-  cursor: pointer;
-}
 .item-img {
   display: block;
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   border: 1px solid #b9bbbe;
   cursor: pointer;
 }
@@ -184,29 +189,38 @@ export default {
   width: 100%;
   height: 100%;
 }
-.item-block {
+.item-block{
   display: flex;
-  height: 6rem;
+  height: 5rem;
   padding: 0rem 0rem 0rem 1.5rem;
   font-size: .5rem;
   line-height: 1.2rem;
   text-align: center;
 }
 .item-name{
-  width: 19.0rem;
+  width: 12.0rem;
   text-align: left;
   cursor: pointer;
 }
+.item-userInfo{
+  width: 8.0rem;
+  font-size: .8rem;
+  text-align: center;
+  cursor: pointer;
+}
 .item-price{
-  width: 10rem;
+  width: 8rem;
   font-size: .8rem;
   font-weight: 600;
 }
-.item-num{
-  width: 10rem;
+.item-orderNum{
+  width: 5rem;
+}
+.item-orderTime{
+  width: 8rem;
 }
 .item-prices{
-  width: 10rem;
+  width: 8rem;
   font-size: .8rem;
   font-weight: 600;
   color: #a80024;
