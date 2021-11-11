@@ -127,7 +127,6 @@ export default {
 }
 .good-block{
   width: 1024px;
-  height: 50rem;
   margin: 5rem auto 5rem auto;
   padding: 0rem 5rem 0rem 5rem;
 }

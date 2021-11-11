@@ -4,11 +4,8 @@
       <a class="nav-left-item" href="/user/seller/goodDict">
         商品目录
       </a>
-      <a class="nav-left-item" href="/user/seller/sellState">
+      <a class="nav-left-item" href="/user/seller/sellReport">
         销售报表
-      </a>
-      <a class="nav-left-item" href="/user/seller/browseLog">
-        顾客浏览日志
       </a>
       <a class="nav-left-item" href="/user/seller/orderLog">
         顾客购买日志

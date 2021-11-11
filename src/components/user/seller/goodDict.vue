@@ -1,16 +1,29 @@
 <template>
   <div id="goodDict">
     <div class="goods-list">
-      <div class="good-item" v-for="(item, index) in goodsList" :key="index"
-      @click="toGoodEdit(item.goodId)">
-        <div class="item-img">
+      <div class="good-item" v-for="(item, index) in goodsList" :key="index">
+        <div class="item-img" @click="toGoodDetail(item.goodId)">
           <img class="item-pic" mode="scaleToFill" :src="item.goodImg"/>
         </div>
         <div class="item-block">
           <div class="item-detail">
             <span class="item-payment">￥ {{item.goodPrice}}</span>
-            <span class="item-title">{{item.goodName}}</span>
+            <span class="item-title" @click="toGoodDetail(item.goodId)">{{item.goodName}}</span>
           </div>
+          <div class="item-buttons">
+            <button @click="editGood(item.goodId)">修改</button>
+            <button @click="deleteGood(item.goodId)">删除</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="good-item" style="vertical-align:bottom">
+        <div class="item-img" style="cursor:default">
+          <img class="item-pic" mode="scaleToFill" alt=""/>
+        </div>
+        <div class="item-block" @click="toGoodAdd()"
+        style="line-height:5rem;text-align:center;cursor:pointer">
+          新增商品
         </div>
       </div>
     </div>
@@ -46,13 +59,28 @@ export default {
         console.log(_err)
       })
     },
-    toGoodEdit (id) {
-      console.log(id)
+    toGoodDetail (id) {
       this.$router.push({
-        name: `user_seller_goodEdit`,
+        name: 'good_detail',
         params: {
           goodId: id
         }
+      })
+    },
+    editGood (id) {
+      this.$router.push({
+        name: 'good_edit',
+        params: {
+          goodId: id
+        }
+      })
+    },
+    deleteGood (id) {
+      // delete
+    },
+    toGoodAdd () {
+      this.$router.push({
+        name: 'good_add'
       })
     }
   },
@@ -105,10 +133,9 @@ export default {
   display: inline-block;
   margin: 1rem 2rem 1rem 0;
   width: 13rem;
-  height: 18rem;
+  height: 20rem;
   border: 1px solid #b9bbbe;
   position: relative;
-  cursor: pointer;
 }
 .item-img {
   display: block;
@@ -116,6 +143,7 @@ export default {
   height: 13rem;
   margin-left: 0rem;
   margin-top: 0rem;
+  cursor: pointer;
 }
 .item-pic {
   display: block;
@@ -125,11 +153,11 @@ export default {
 }
 .item-block {
   display: block;
-  height: 3rem;
+  padding: 0.5rem;
+  /* height: 3rem; */
 }
 .item-detail {
-  padding: 0.5rem;
-  height: 3rem;
+  /* height: 3rem; */
 }
 .item-detail .item-payment {
   display: block;
@@ -147,6 +175,7 @@ export default {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   display: -webkit-box;
+  cursor: pointer;
 
   /* display: block; */
   line-height: 1.2rem;
@@ -155,5 +184,23 @@ export default {
   font-size: 0.8rem;
   padding-top: 0.5rem;
   color: #182941;
+}
+.item-detail .item-title:hover{
+  color: #a75667;
+  text-decoration:underline;
+}
+.item-buttons{
+  display: flex;
+  justify-content: space-around;
+}
+.item-buttons button{
+  display: inline-block;
+  height: 1.5rem;
+  width: 5.0rem;
+  margin: .25rem .25rem .25rem .25rem;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #435a72;
+  color: aliceblue;
+  cursor: pointer;
 }
 </style>

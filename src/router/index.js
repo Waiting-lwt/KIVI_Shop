@@ -9,12 +9,15 @@ import register from '@/components/user/register'
 import cart from '@/components/user/cart'
 import seller from '@/components/user/seller'
 import buyer from '@/components/user/buyer'
-import detail from '@/components/good/detail'
+import goodDetail from '@/components/good/detail'
+import goodEdit from '@/components/good/edit'
+import goodAdd from '@/components/good/add'
 import goodDict from '@/components/user/seller/goodDict'
-import goodEdit from '@/components/user/seller/goodEdit'
-import orderLog from '@/components/user/seller/orderLog'
-import browseLog from '@/components/user/seller/browseLog'
-import sellState from '@/components/user/seller/sellState'
+import sellerOrderLog from '@/components/user/seller/orderLog'
+import sellerBrowseLog from '@/components/user/seller/browseLog'
+import sellReport from '@/components/user/seller/sellReport'
+import buyerOrderLog from '@/components/user/buyer/orderLog'
+import buyerBrowseLog from '@/components/user/buyer/browseLog'
 
 Vue.use(VueRouter)
 
@@ -44,7 +47,19 @@ export default new VueRouter({
     {
       path: '/user/buyer',
       name: 'user_buyer',
-      component: buyer
+      component: buyer,
+      children: [
+        {
+          path: '/user/buyer/orderLog',
+          name: 'user_buyer_orderLog',
+          component: buyerOrderLog
+        },
+        {
+          path: '/user/buyer/browseLog',
+          name: 'user_buyer_browseLog',
+          component: buyerBrowseLog
+        }
+      ]
     },
     {
       path: '/user/seller',
@@ -57,31 +72,41 @@ export default new VueRouter({
           component: goodDict
         },
         {
-          path: '/user/seller/goodEdit',
-          name: 'user_seller_goodEdit',
-          component: goodEdit
-        },
-        {
           path: '/user/seller/orderLog',
           name: 'user_seller_orderLog',
-          component: orderLog
+          component: sellerOrderLog
         },
         {
           path: '/user/seller/browseLog',
           name: 'user_seller_browseLog',
-          component: browseLog
+          component: sellerBrowseLog
         },
         {
-          path: '/user/seller/sellState',
-          name: 'user_seller_sellState',
-          component: sellState
+          path: '/user/seller/sellReport',
+          name: 'user_seller_sellReport',
+          component: sellReport
         }
       ]
     },
     {
       path: '/good/detail',
       name: 'good_detail',
-      component: detail
+      component: goodDetail
+    },
+    {
+      path: '/good/edit',
+      name: 'good_edit',
+      component: goodEdit
+    },
+    {
+      path: '/good/edit',
+      name: 'good_edit',
+      component: goodEdit
+    },
+    {
+      path: '/good/add',
+      name: 'good_add',
+      component: goodAdd
     }
   ]
 })

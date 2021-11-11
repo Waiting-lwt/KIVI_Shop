@@ -1,8 +1,8 @@
 <template>
-  <div id="sellState">
+  <div id="orderLog">
     <div class="title">
       <div class="title-goodInfo">商品信息</div>
-      <div class="title-userInfo">买家</div>
+      <div class="title-userInfo">卖家</div>
       <div class="title-orderTime">交易时间</div>
       <div class="title-orderPrice">单价</div>
       <div class="title-orderNum">数量</div>
@@ -16,7 +16,7 @@
         </div>
         <div class="item-block">
           <div class="item-name" @click="toGoodDetail(item.userOrder.goodId)">{{item.userOrder.goodName}}</div>
-          <div class="item-userInfo" @click="toBuyer(item.buyerId)">{{item.buyerName}}</div>
+          <div class="item-userInfo" @click="toBuyer(item.sellerId)">{{item.sellerName}}</div>
           <div class="item-orderTime">{{$formatDate(item.orderTime)}}</div>
           <div class="item-price">￥ {{item.userOrder.goodPrice}}</div>
           <div class="item-orderNum">{{item.userOrder.goodNum}}</div>
@@ -64,9 +64,9 @@ export default {
     getSellerOrder () {
       let data = {
         method: 'GET',
-        url: '/user/getSellerOrder',
+        url: '/user/getBuyerOrder',
         params: {
-          sellerId: this.userId
+          buyerId: this.userId
         }
       }
       this.$request(data).then(res => {
@@ -134,7 +134,7 @@ export default {
 </script>
 
 <style>
-#sellState{
+#orderLog{
   z-index: 15;
   margin: 2rem 0 0 15rem;
   width: 1080px

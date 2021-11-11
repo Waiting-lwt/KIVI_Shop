@@ -225,4 +225,8 @@ input {
   padding-top: 0.5rem;
   color: #182941;
 }
+.item-detail .item-title:hover{
+  color: #a75667;
+  text-decoration:underline;
+}
 </style>

@@ -8,12 +8,22 @@
         </div>
         <div class="item-block">
           <div class="item-detail">
-            <span class="item-title">{{goodInfo.goodName}}</span>
-            <span class="item-payment">￥ {{goodInfo.goodPrice}}</span>
-            <span class="item-num">库存 {{goodInfo.goodInventory}}</span>
+            <div class="item-title">
+              <span>名称</span>
+              <textarea cols="50" rows="2" type="text"
+               v-model="goodName" maxlength="50"></textarea>
+            </div>
+            <div class="item-payment">
+              价格 ￥
+              <input type="number" v-model="goodPrice">
+            </div>
+            <div class="item-num">
+              库存
+              <input type="number" v-model="goodInventory">
+            </div>
             <div class="item-buttons">
-                <button @click="editGood">修改</button>
-                <button @click="deleteGood">删除</button>
+                <button @click="confirmEdit">确定</button>
+                <button @click="deleteEdit">重置</button>
             </div>
           </div>
         </div>
@@ -27,7 +37,10 @@
 export default {
   data () {
     return {
-      goodInfo: {}
+      goodInfo: {},
+      goodName: '',
+      goodPrice: '',
+      goodInventory: ''
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -57,16 +70,44 @@ export default {
       }
       this.$request(data).then(res => {
         this.goodInfo = res.data
+        this.goodName = this.goodInfo.goodName
+        this.goodPrice = this.goodInfo.goodPrice
+        this.goodInventory = this.goodInfo.goodInventory
         console.log(this.goodInfo)
       }).catch(_err => {
         console.log(_err)
       })
     },
-    editGood () {
-
+    confirmEdit () {
+      let data = {
+        method: 'PUT',
+        url: '/good/updateGood',
+        data: {
+          goodId: this.goodInfo.goodId,
+          goodName: this.goodName,
+          goodPrice: this.goodPrice,
+          goodInventory: this.goodInventory
+          // goodImg: this.goodInfo.goodImg
+        }
+      }
+      let self = this
+      this.$request(data).then(res => {
+        console.log(res)
+        alert('修改成功!')
+        this.goodInfo.goodName = this.goodName
+        this.goodInfo.goodPrice = this.goodPrice
+        this.goodInfo.goodInventory = this.goodInventory
+        self.$route.push({
+          name: 'user_seller_goodDict'
+        })
+      }).catch(_err => {
+        console.log(_err)
+      })
     },
-    deleteGood () {
-
+    deleteEdit () {
+      this.goodName = this.goodInfo.goodName
+      this.goodPrice = this.goodInfo.goodPrice
+      this.goodInventory = this.goodInfo.goodInventory
     }
   },
   // 执行之前，判断是否有el,template;编译
@@ -141,17 +182,35 @@ export default {
 }
 
 .item-detail .item-title {
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-
-  /* display: block; */
-  line-height: 1.7rem;
+  display: flex;
+  flex-direction: row;
+  /* -webkit-line-clamp: 2; */
+  /* -webkit-box-orient: horizontal; */
+  /* display: -webkit-box; */
   height: 3.5rem;
+}
+.item-detail .item-title span{
+  display: inline-block;
+  /* line-height: 1.7rem; */
+  /* line-height: 3.5rem; */
   overflow: hidden;
   font-size: 1.0rem;
+  width: 3rem;
   padding-bottom: 0.5rem;
   color: #182941;
+}
+.item-detail .item-title textarea{
+  display: block;
+  line-height: 1.0rem;
+  height: 2rem;
+  /* width: 15rem; */
+  overflow: hidden;
+  font-size: 1.0rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+  color: #182941;
+  text-align: left;
+  border: 1px solid #182941;
+  resize: none;
 }
 .item-detail .item-payment {
   display: block;
@@ -162,6 +221,17 @@ export default {
   color: #a80024;
   font-weight: 600;
 }
+.item-detail .item-payment input{
+  line-height: 3rem;
+  height: 2.5rem;
+  width: 7rem;
+  overflow: hidden;
+  font-size: 1.7rem;
+  color: #a80024;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #182941;
+}
 .item-detail .item-num {
   display: block;
   line-height: 3rem;
@@ -170,6 +240,17 @@ export default {
   font-size: 1.0rem;
   padding-bottom: 0.5rem;
   color: #5a677a;
+}
+.item-detail .item-num input{
+  line-height: 1rem;
+  height: 1rem;
+  width: 10rem;
+  overflow: hidden;
+  font-size: 1.0rem;
+  padding: 0.25rem;
+  color: #5a677a;
+  text-align: center;
+  border: 1px solid #182941;
 }
 button{
   display: inline-block;
