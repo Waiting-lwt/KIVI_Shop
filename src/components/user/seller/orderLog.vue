@@ -17,7 +17,7 @@
         <div class="item-block">
           <div class="item-name" @click="toGoodDetail(item.userOrder.goodId)">{{item.userOrder.goodName}}</div>
           <div class="item-userInfo" @click="toBuyer(item.buyerId)">{{item.buyerName}}</div>
-          <div class="item-orderTime">{{item.orderTime}}</div>
+          <div class="item-orderTime">{{$formatDate(item.orderTime)}}</div>
           <div class="item-price">￥ {{item.userOrder.goodPrice}}</div>
           <div class="item-orderNum">{{item.userOrder.goodNum}}</div>
           <div class="item-prices">￥ {{item.userOrder.goodPrice*item.userOrder.goodNum}}</div>

@@ -2,7 +2,7 @@
   <div id="goodDict">
     <div class="goods-list">
       <div class="good-item" v-for="(item, index) in goodsList" :key="index"
-      @click="toGoodDetail(item.goodId)">
+      @click="toGoodEdit(item.goodId)">
         <div class="item-img">
           <img class="item-pic" mode="scaleToFill" :src="item.goodImg"/>
         </div>
@@ -46,8 +46,14 @@ export default {
         console.log(_err)
       })
     },
-    toGoodDetail (id) {
-
+    toGoodEdit (id) {
+      console.log(id)
+      this.$router.push({
+        name: `user_seller_goodEdit`,
+        params: {
+          goodId: id
+        }
+      })
     }
   },
   // 执行之前，判断是否有el,template;编译
@@ -102,6 +108,7 @@ export default {
   height: 18rem;
   border: 1px solid #b9bbbe;
   position: relative;
+  cursor: pointer;
 }
 .item-img {
   display: block;

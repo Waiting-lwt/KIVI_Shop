@@ -43,3 +43,17 @@ export function request (option) {
     })
   }
 }
+
+// 时间戳转文本
+export function formatDate (date) {
+  // 格式化日期
+  let d = new Date(date * 1000)
+  let month = '' + (d.getMonth() + 1)
+  let day = '' + d.getDate()
+  let year = d.getFullYear()
+  let hour = d.getHours()
+  let minute = d.getMinutes()
+  // let second = d.getSeconds()
+  if (parseInt(minute) < 10) minute = '0' + minute
+  return year + '/' + month + '/' + day + ' ' + hour + ':' + minute
+}

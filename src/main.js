@@ -3,12 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {request} from './utils/api'
+import {request, formatDate} from './utils/api'
 import axios from 'axios' // 引入 axios库
 
 Vue.config.productionTip = false
 
 Vue.prototype.$request = request
+Vue.prototype.$formatDate = formatDate
 Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'development') {
     baseURL = 'http://localhost:8080'
   } else {
     // 正式环境
-    baseURL = 'http://localhost:8080'
+    baseURL = 'http://47.106.104.174:8080'
   }
 }
 // 配置axios的属性

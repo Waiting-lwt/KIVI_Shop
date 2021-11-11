@@ -11,6 +11,7 @@ import seller from '@/components/user/seller'
 import buyer from '@/components/user/buyer'
 import detail from '@/components/good/detail'
 import goodDict from '@/components/user/seller/goodDict'
+import goodEdit from '@/components/user/seller/goodEdit'
 import orderLog from '@/components/user/seller/orderLog'
 import browseLog from '@/components/user/seller/browseLog'
 import sellState from '@/components/user/seller/sellState'
@@ -54,6 +55,11 @@ export default new VueRouter({
           path: '/user/seller/goodDict',
           name: 'user_seller_goodDict',
           component: goodDict
+        },
+        {
+          path: '/user/seller/goodEdit',
+          name: 'user_seller_goodEdit',
+          component: goodEdit
         },
         {
           path: '/user/seller/orderLog',
