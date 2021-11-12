@@ -11,6 +11,7 @@ Vue.config.productionTip = false
 Vue.prototype.$request = request
 Vue.prototype.$formatDate = formatDate
 Vue.prototype.$axios = axios
+Vue.prototype.$Base64 = require('js-base64').Base64
 
 /* eslint-disable no-new */
 new Vue({

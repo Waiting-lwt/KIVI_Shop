@@ -55,15 +55,20 @@ export default {
         return 0
       }
       let data = {
-        params: {
-          userName: this.name,
-          userEmail: this.email,
-          userPassword: this.password
-        },
-        method: 'POST',
-        url: '/user/addUser'
+        userName: this.name,
+        userEmail: this.email,
+        userPassword: this.$Base64.encode(this.password)
       }
-      this.$request(data).then(res => {
+      this.$axios({
+        url: '/user/addUser',
+        method: 'POST',
+        dataType: 'json',
+        params: {userId: this.userId},
+        data: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
         console.log(res)
         if (res.data === -1) {
           alert('该用户名已存在！')

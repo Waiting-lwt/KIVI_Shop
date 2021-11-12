@@ -47,7 +47,9 @@ export default {
   },
   methods: {
     selectGood (id) {
-      if (id === undefined) id = 5
+      if (id === undefined) {
+        id = window.sessionStorage.getItem('goodId')
+      }
       let data = {
         method: 'GET',
         url: '/good/selectGood',
@@ -58,6 +60,7 @@ export default {
       this.$request(data).then(res => {
         this.goodInfo = res.data
         console.log(this.goodInfo)
+        window.sessionStorage.setItem('goodId', this.goodInfo.goodId)
       }).catch(_err => {
         console.log(_err)
       })

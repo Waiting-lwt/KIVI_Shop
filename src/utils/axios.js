@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   // 编译环境
   if (process.env.type === 'test') {
     // 测试环境
-    baseURL = 'http://localhost:8080'
+    baseURL = 'http://47.106.104.174:8080'
   } else {
     // 正式环境
     baseURL = 'http://47.106.104.174:8080'
@@ -65,6 +65,10 @@ Axios.interceptors.response.use(
       // 对响应数据做些事
       // alert("提交成功")
       return Promise.resolve(res)
+    }
+    if (res.status === 400) {
+      // 对响应数据做些事
+      alert(res.error)
     }
     return res
   },

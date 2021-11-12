@@ -3,8 +3,19 @@
     <div class="good-block">
 
       <div class="good-item">
-        <div class="item-img">
-          <img class="item-pic" mode="scaleToFill" :src="goodInfo.goodImg"/>
+        <div class="item-img-block">
+          <div class="item-img-item">
+            <img class="item-pic" mode="scaleToFill" :src="goodImg" alt="请选择上传图片"/>
+          </div>
+          <div class="item-pic-buttons">
+            <input type="file" accept="image/*"
+            @change="editImg" class="item-pic-buttons-input"/>
+            <button @click="uploadImg">提交图片</button>
+          </div>
+          <canvas ref="imgPreview"
+            height="0"
+            width="0">
+          </canvas>
         </div>
         <div class="item-block">
           <div class="item-detail">
@@ -40,7 +51,10 @@ export default {
       goodInfo: {},
       goodName: '',
       goodPrice: '',
-      goodInventory: ''
+      goodInventory: '',
+      goodImg: '',
+      base64: '',
+      imgPreview: ''
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -60,7 +74,9 @@ export default {
   },
   methods: {
     selectGood (id) {
-      if (id === undefined) id = 5
+      if (id === undefined) {
+        id = window.sessionStorage.getItem('goodId')
+      }
       let data = {
         method: 'GET',
         url: '/good/selectGood',
@@ -73,12 +89,62 @@ export default {
         this.goodName = this.goodInfo.goodName
         this.goodPrice = this.goodInfo.goodPrice
         this.goodInventory = this.goodInfo.goodInventory
+        this.goodImg = this.goodInfo.goodImg
         console.log(this.goodInfo)
+        window.sessionStorage.setItem('goodId', this.goodInfo.goodId)
       }).catch(_err => {
         console.log(_err)
       })
     },
+    editImg (event) {
+      let file = event.target.files[0]
+      let reader = new FileReader()
+      let img = new Image()
+      // 读取图片
+      reader.readAsDataURL(file)
+      // 读取完毕后的操作
+      reader.onloadend = (e) => {
+        img.src = e.target.result
+        // 这里的e.target就是reader
+        // console.log(reader.result)
+        // reader.result就是图片的base64字符串
+        this.base64 = reader.result
+      }
+      // 预览图片
+      let canvas = this.$refs['imgPreview']
+      let context = canvas.getContext('2d')
+      img.onload = () => {
+        img.width = 100
+        img.height = 100
+        // 设置canvas大小
+        canvas.width = 100
+        canvas.height = 100
+        // 清空canvas
+        context.clearRect(0, 0, 100, 100)
+        // 画图
+        context.drawImage(img, 0, 0, 100, 100)
+      }
+    },
+    uploadImg () {
+      console.log(this.base64)
+      this.$axios.post('upload/goodImg', {
+        img: this.base64
+      }).then(res => {
+        alert('提交成功!')
+        console.log(res.data)
+        this.goodImg = res.data.data
+        console.log(this.goodImg)
+      }).catch(_err => {
+      })
+    },
     confirmEdit () {
+      if (this.goodName === '' ||
+       this.goodPrice === '' ||
+       this.goodImg === '' ||
+       this.goodInventory === '') {
+        alert('请完成信息的填写!')
+        return
+      }
       let data = {
         method: 'PUT',
         url: '/good/updateGood',
@@ -86,8 +152,8 @@ export default {
           goodId: this.goodInfo.goodId,
           goodName: this.goodName,
           goodPrice: this.goodPrice,
-          goodInventory: this.goodInventory
-          // goodImg: this.goodInfo.goodImg
+          goodInventory: this.goodInventory,
+          goodImg: this.goodInfo.goodImg
         }
       }
       let self = this
@@ -97,7 +163,8 @@ export default {
         this.goodInfo.goodName = this.goodName
         this.goodInfo.goodPrice = this.goodPrice
         this.goodInfo.goodInventory = this.goodInventory
-        self.$route.push({
+        this.goodInfo.goodImg = this.goodImg
+        self.$router.push({
           name: 'user_seller_goodDict'
         })
       }).catch(_err => {
@@ -147,7 +214,7 @@ export default {
 }
 .good-block{
   width: 1024px;
-  height: 50rem;
+  /* height: 50rem; */
   margin: 5rem auto 5rem auto;
   padding: 0rem 5rem 0rem 5rem;
 }
@@ -158,12 +225,14 @@ export default {
   height: 25rem;
   position: relative;
 }
-.item-img {
+.item-img-block {
+  display: block;
+  width: 22rem;
+}
+.item-img-item {
   display: block;
   width: 22rem;
   height: 22rem;
-  margin-left: 0rem;
-  margin-top: 0rem;
   border: 1px solid #b9bbbe;
 }
 .item-pic {
@@ -253,6 +322,37 @@ export default {
   border: 1px solid #182941;
 }
 button{
+  display: inline-block;
+  height: 2.5rem;
+  width: 11rem;
+  margin: 5rem .7rem 0rem .1rem;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #435a72;
+  color: aliceblue;
+}
+.item-pic-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+.item-pic-buttons button{
+  display: inline-block;
+  height: 2.5rem;
+  width: 10rem;
+  margin: .5rem 0rem 0rem 0rem;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #435a72;
+  color: aliceblue;
+}
+.item-pic-buttons-input{
+  display: inline-block;
+  width: 10rem;
+  margin: .5rem 0rem 0rem 0rem;
+  padding: .5rem .5rem .3rem 1.0rem;
+  /* border: 1px solid rgb(204, 204, 204); */
+  /* background-color: #435a72; */
+  /* color: aliceblue; */
+}
+.item-detail button{
   display: inline-block;
   height: 2.5rem;
   width: 11rem;

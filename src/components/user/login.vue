@@ -34,7 +34,8 @@ export default {
       let data = {
         params: {
           userName: this.name,
-          userPassword: this.password
+          userPassword: this.$Base64.encode(this.password)
+          // userPassword: this.password
         },
         method: 'GET',
         url: '/user/getUser'

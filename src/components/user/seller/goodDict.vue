@@ -76,7 +76,24 @@ export default {
       })
     },
     deleteGood (id) {
-      // delete
+      let data = {
+        goodId: id
+      }
+      this.$axios({
+        url: '/good/deleteGood',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        alert('删除成功')
+        console.log(res)
+      }).catch(_err => {
+        console.log(_err)
+      })
+      this.getSellerGoods()
     },
     toGoodAdd () {
       this.$router.push({
@@ -157,6 +174,7 @@ export default {
   /* height: 3rem; */
 }
 .item-detail {
+  display: block;
   /* height: 3rem; */
 }
 .item-detail .item-payment {

@@ -12,10 +12,10 @@ export function request (option) {
     console.log(option.data)
     return Axios({
       url: option.url,
-      method: 'post',
-      dataType: 'POST' || option.dataType,
+      method: 'POST',
+      // dataType: 'json' || option.dataType,
       headers: option.header || {
-        'Content-Type': option.contentType || 'application/json'
+        'Content-Type': 'application/json'
       },
       params: option.params || {},
       data: option.data // POST - data

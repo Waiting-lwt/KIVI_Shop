@@ -61,9 +61,10 @@
 
     <div class="modal-mask" v-if="showPay" @click="showPay=false"></div>
     <div class="modal-block" v-if="showPay">
-        <div>打钱！</div>
-        <div>发邮件到你的邮箱啦！</div>
+        <div>确定后打钱！</div>
+        <div>发订单邮件到你的邮箱啦！</div>
         <button @click="confirmPay">确定</button>
+        <button @click="deletePay">取消</button>
     </div>
 
   </div>
@@ -219,7 +220,7 @@ export default {
       // })
       this.$axios({
         url: '/user/addOrder',
-        method: 'post',
+        method: 'POST',
         dataType: 'json',
         params: {userId: this.userId},
         data: JSON.stringify(selectCarts),
@@ -231,6 +232,9 @@ export default {
       }).catch(_err => {
         console.log(_err)
       })
+      this.showPay = false
+    },
+    deletePay () {
       this.showPay = false
     }
   },

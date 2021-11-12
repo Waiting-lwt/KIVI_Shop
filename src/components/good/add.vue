@@ -48,6 +48,7 @@
 export default {
   data () {
     return {
+      userId: 0,
       goodInfo: {},
       goodName: '',
       goodPrice: '',
@@ -104,32 +105,47 @@ export default {
     },
     uploadImg () {
       console.log(this.base64)
-      this.$axios.post('image/uploadImg', {
+      this.$axios.post('upload/goodImg', {
         img: this.base64
       }).then(res => {
-        this.goodImg = res.data.imgUrl
+        alert('提交成功!')
+        console.log(res.data)
+        this.goodImg = res.data.data
+        console.log(this.goodImg)
       }).catch(_err => {
       })
     },
     confirmAdd () {
-      let data = {
-        method: 'POST',
-        url: '/good/addGood',
-        data: {
-          goodName: this.goodName,
-          goodPrice: this.goodPrice,
-          goodImg: this.goodImg,
-          goodInventory: this.goodInventory
-        }
+      if (this.goodName === '' ||
+       this.goodPrice === '' ||
+       this.goodImg === '' ||
+       this.goodInventory === '') {
+        alert('请完成信息的填写!')
+        return
       }
       let self = this
-      this.$request(data).then(res => {
+      let data = {
+        goodSeller: this.userId,
+        goodName: this.goodName,
+        goodPrice: this.goodPrice,
+        goodImg: this.goodImg,
+        goodInventory: this.goodInventory
+      }
+      this.$axios({
+        url: '/good/addGood',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
         console.log(res)
-        alert('修改成功!')
+        alert('添加成功!')
         this.goodInfo.goodName = this.goodName
         this.goodInfo.goodPrice = this.goodPrice
         this.goodInfo.goodInventory = this.goodInventory
-        self.$route.push({
+        self.$router.push({
           name: 'user_seller_goodDict'
         })
       }).catch(_err => {
@@ -149,10 +165,14 @@ export default {
   },
   // 挂载完毕
   mounted () {
-    // debugger
-    // 挂载： 把VUE实例生成的虚拟的DOM转成真实的DOM，放在了页面中，这就是挂载；
-    // 编译出的DOM把原有的DOM替换完毕；
-    // 可以获取最终的DOM元素
+    if (!window.sessionStorage.getItem('userId')) {
+      this.$router.push({
+        name: `user_login`
+      })
+    } else {
+      this.userId = window.sessionStorage.getItem('userId')
+      console.log(this.userId)
+    }
   },
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
   beforeUpdate () {
