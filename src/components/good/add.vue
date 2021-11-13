@@ -105,9 +105,14 @@ export default {
     },
     uploadImg () {
       console.log(this.base64)
-      this.$axios.post('upload/goodImg', {
-        img: this.base64
-      }).then(res => {
+      let data = {
+        method: 'POST',
+        url: '/upload/goodImg',
+        data: {
+          img: this.base64
+        }
+      }
+      this.$request(data).then(res => {
         alert('提交成功!')
         console.log(res.data)
         this.goodImg = res.data.data
@@ -125,21 +130,17 @@ export default {
       }
       let self = this
       let data = {
-        goodSeller: this.userId,
-        goodName: this.goodName,
-        goodPrice: this.goodPrice,
-        goodImg: this.goodImg,
-        goodInventory: this.goodInventory
-      }
-      this.$axios({
-        url: '/good/addGood',
         method: 'POST',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
+        url: '/good/addGood',
+        data: {
+          goodSeller: this.userId,
+          goodName: this.goodName,
+          goodPrice: this.goodPrice,
+          goodImg: this.goodImg,
+          goodInventory: this.goodInventory
         }
-      }).then(res => {
+      }
+      this.$request(data).then(res => {
         console.log(res)
         alert('添加成功!')
         this.goodInfo.goodName = this.goodName

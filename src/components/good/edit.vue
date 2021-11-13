@@ -127,9 +127,14 @@ export default {
     },
     uploadImg () {
       console.log(this.base64)
-      this.$axios.post('upload/goodImg', {
-        img: this.base64
-      }).then(res => {
+      let data = {
+        method: 'POST',
+        url: '/upload/goodImg',
+        data: {
+          img: this.base64
+        }
+      }
+      this.$request(data).then(res => {
         alert('提交成功!')
         console.log(res.data)
         this.goodImg = res.data.data

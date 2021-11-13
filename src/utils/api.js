@@ -13,7 +13,6 @@ export function request (option) {
     return Axios({
       url: option.url,
       method: 'POST',
-      // dataType: 'json' || option.dataType,
       headers: option.header || {
         'Content-Type': 'application/json'
       },

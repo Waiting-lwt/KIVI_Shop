@@ -27,9 +27,6 @@ export default {
   // 给Vue的实例注入数据，进行数据监听
   created () {},
   methods: {
-    getSellerGoods () {
-
-    }
   },
   // 执行之前，判断是否有el,template;编译
   beforeMount () {
@@ -40,7 +37,7 @@ export default {
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
   beforeUpdate () {
     // 更新数据之前执行
-    if (window.sessionStorage.getItem('userType') === '2') {
+    if (Number(window.sessionStorage.getItem('userType')) === 2) {
       this.$router.push({
         name: `user_seller_goodDict`
       })

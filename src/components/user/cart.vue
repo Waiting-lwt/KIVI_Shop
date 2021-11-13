@@ -203,31 +203,16 @@ export default {
       })
       console.log(this.userId)
       console.log(selectCarts)
-      // var data = {
-      //   method: 'POST',
-      //   dataType: 'json',
-      //   url: '/user/addOrder',
-      //   // contentType: 'application/x-www-form-urlencoded'
-      //   params: {
-      //     userId: this.userId
-      //   },
-      //   data: JSON.stringify(selectCarts)
-      // }
-      // this.$request(data).then(res => {
-      //   console.log(res)
-      // }).catch(_err => {
-      //   console.log(_err)
-      // })
-      this.$axios({
-        url: '/user/addOrder',
+      var data = {
         method: 'POST',
         dataType: 'json',
-        params: {userId: this.userId},
-        data: JSON.stringify(selectCarts),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
+        url: '/user/addOrder',
+        params: {
+          userId: this.userId
+        },
+        data: selectCarts
+      }
+      this.$request(data).then(res => {
         console.log(res)
       }).catch(_err => {
         console.log(_err)

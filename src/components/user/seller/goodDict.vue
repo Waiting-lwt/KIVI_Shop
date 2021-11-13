@@ -76,24 +76,21 @@ export default {
       })
     },
     deleteGood (id) {
-      let data = {
-        goodId: id
-      }
-      this.$axios({
-        url: '/good/deleteGood',
+      var data = {
         method: 'POST',
         dataType: 'json',
-        data: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
+        url: '/good/deleteGood',
+        data: {
+          goodId: id
         }
-      }).then(res => {
+      }
+      this.$request(data).then(res => {
         alert('删除成功')
         console.log(res)
+        this.getSellerGoods()
       }).catch(_err => {
         console.log(_err)
       })
-      this.getSellerGoods()
     },
     toGoodAdd () {
       this.$router.push({
