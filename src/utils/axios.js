@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
   if (process.env.type === 'test') {
     // 测试环境
     baseURL = 'http://47.106.104.174:8080'
-  } else {
+  } else { // production
     // 正式环境
     baseURL = 'http://47.106.104.174:8080'
   }

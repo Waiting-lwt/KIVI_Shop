@@ -3,7 +3,7 @@
     <div class="title">
       <span class="title-icon">KIVI</span>
       <div class="search-block">
-        <input type="text"  @keyup.enter="search()" v-model="search_content" maxlength="40"/>
+        <input type="text"  @keyup.enter="search()" v-model="search_content" maxlength="40" v-on:input = "inputSearch()"/>
         <div class="search-icon" @click="search()">搜索</div>
       </div>
     </div>
@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       goodsList: [],
-      search_content: ''
+      search_content: '',
+      inputSearch: this.fangdou_search()
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -61,6 +62,18 @@ export default {
         console.log(_err)
       })
     },
+    fangdou_search () {
+      let timer = null
+      return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          console.log(this.search_content)
+        }, 600)
+      }
+    },
+    // inputSearch () {
+    //   this.dou()
+    // },
     toGoodDetail (id) {
       this.$router.push({
         name: `good_detail`,

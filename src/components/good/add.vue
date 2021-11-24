@@ -102,6 +102,8 @@ export default {
         // 画图
         context.drawImage(img, 0, 0, 100, 100)
       }
+      // 压缩 (file.type, quality)
+      this.base64 = canvas.toDataURL('image/jpg', 0.2)
     },
     uploadImg () {
       console.log(this.base64)

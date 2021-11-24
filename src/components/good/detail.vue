@@ -103,7 +103,7 @@ export default {
     // 挂载： 把VUE实例生成的虚拟的DOM转成真实的DOM，放在了页面中，这就是挂载；
     // 编译出的DOM把原有的DOM替换完毕；
     // 可以获取最终的DOM元素
-    this.selectGood(this.$route.params.goodId)
+    this.selectGood(this.$router.params.goodId)
   },
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
   beforeUpdate () {

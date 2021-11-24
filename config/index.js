@@ -11,9 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': { // 这个  要与 axios.js 文件中的 baseURL 值对应
-        target: 'http://47.106.104.174:8080',      // 你接口的域名
-        // target: 'http://localhost:8080',
+      '/api': { // 反向代理标签 这个  要与 axios.js 文件中的 baseURL 值对应
+        // target: 'http://47.106.104.174:8080',      // 你接口的域名
+        target: 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite:{
           '^/api': ''

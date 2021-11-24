@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import {request, formatDate} from './utils/api'
 import axios from 'axios' // 引入 axios库
+// import 'swiper/dist/css/swiper.min.css' // 引入 swiper 轮播图组件
+// import 'swiper/dist/js/swiper.min'
 
 Vue.config.productionTip = false
 
