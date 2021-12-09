@@ -10,7 +10,8 @@
           <div class="item-detail">
             <span class="item-title">{{goodInfo.goodName}}</span>
             <span class="item-payment">￥ {{goodInfo.goodPrice}}</span>
-            <span class="item-num">库存 {{goodInfo.goodInventory}}</span>
+            <span class="item-num">库存： {{goodInfo.goodInventory}}</span>
+            <span class="item-seller">卖家： {{goodInfo.goodSellerName}}</span>
             <div class="item-buttons">
                 <button @click="buyGood">立即购买</button>
                 <button @click="addToCart">加入购物车</button>
@@ -19,6 +20,26 @@
         </div>
       </div>
 
+      <div class="good-detail">
+        <div class="detail-title">
+          <ul class="tabbar">
+            <li :class="{'selected':showDetailType==0}"
+             @click="showDetailType = 0">
+              商品详情
+            </li>
+            <li :class="{'selected':showDetailType==1}"
+             @click="showDetailType = 1">
+              商品评价
+            </li>
+          </ul>
+        </div>
+        <div class="intro-content" :class="{'display-none':showDetailType!=0}">
+          {{goodInfo.goodIntro}}
+        </div>
+        <div class="intro-content" :class="{'display-none':showDetailType!=1}">
+          尚未开发嘤嘤嘤
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +48,8 @@
 export default {
   data () {
     return {
-      goodInfo: {}
+      goodInfo: {},
+      showDetailType: 0
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -50,6 +72,7 @@ export default {
       if (id === undefined) {
         id = window.sessionStorage.getItem('goodId')
       }
+      this.goodInfo.goodId = id
       let data = {
         method: 'GET',
         url: '/good/selectGood',
@@ -61,11 +84,34 @@ export default {
         this.goodInfo = res.data
         console.log(this.goodInfo)
         window.sessionStorage.setItem('goodId', this.goodInfo.goodId)
+        this.addBrowsed()
       }).catch(_err => {
         console.log(_err)
       })
     },
-    buyGood () {},
+    addBrowsed () {
+      if (!window.sessionStorage.getItem('userId')) {
+        return
+      }
+      let time = new Date().getTime().toString().substring(0, 10)
+      let data = {
+        method: 'POST',
+        url: '/user/addUserBrowsed',
+        data: {
+          goodId: this.goodInfo.goodId,
+          browserId: window.sessionStorage.getItem('userId'),
+          browseTime: time
+        }
+      }
+      this.$request(data).then(res => {
+        console.log(res)
+      }).catch(_err => {
+        console.log(_err)
+      })
+    },
+    buyGood () {
+      alert('暂未开放')
+    },
     addToCart () {
       if (!window.sessionStorage.getItem('userId')) {
         this.$router.push({
@@ -103,7 +149,7 @@ export default {
     // 挂载： 把VUE实例生成的虚拟的DOM转成真实的DOM，放在了页面中，这就是挂载；
     // 编译出的DOM把原有的DOM替换完毕；
     // 可以获取最终的DOM元素
-    this.selectGood(this.$router.params.goodId)
+    this.selectGood(this.$route.params.goodId)
   },
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
   beforeUpdate () {
@@ -187,11 +233,18 @@ export default {
 }
 .item-detail .item-num {
   display: block;
-  line-height: 3rem;
-  height: 3rem;
+  margin: 0.5rem 0 0.5rem 0;
+  line-height: 1.5rem;
   overflow: hidden;
-  font-size: 1.0rem;
-  padding-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: #5a677a;
+}
+.item-detail .item-seller {
+  display: block;
+  margin: 0.5rem 0 0.5rem 0;
+  line-height: 1.5rem;
+  overflow: hidden;
+  font-size: 0.8rem;
   color: #5a677a;
 }
 button{
@@ -202,5 +255,46 @@ button{
   border: 1px solid rgb(204, 204, 204);
   background-color: #435a72;
   color: aliceblue;
+  cursor: pointer;
+}
+.good-detail{
+  display: block;
+  border: 1px solid #93a1af;
+}
+.intro-title{
+  line-height: 2rem;
+  color: #182941;
+}
+.intro-content{
+  font-size: 13px;
+  line-height: 1.2rem;
+  padding: 1.0rem;
+}
+.tabbar{
+  width: 100%;
+  position: relative;
+  height: 48px;
+  border: 1px solid #dfdfdf;
+}
+.tabbar li {
+  float: left;
+  height: 48px;
+  line-height: 48px;
+  display: block;
+  cursor: pointer;
+  border-right: 1px dotted #d2d2d2;
+  font-size: 13.5px;
+  color: #182941;
+  padding: 0 20px;
+}
+.tabbar .selected{
+  background-color: #f5f5f5;
+  color: #000000;
+}
+.display-none{
+  display: none;
+}
+.dvisibility-hidden{
+  visibility: hidden;
 }
 </style>

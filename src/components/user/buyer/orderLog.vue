@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   data () {
     return {
@@ -133,7 +133,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #orderLog{
   z-index: 15;
   margin: 2rem 0 0 15rem;
@@ -226,7 +226,7 @@ export default {
   color: #a80024;
 }
 .buttom-block{
-  position: fixed;
+  position: relative;
   display: flex;
   bottom: 0;
   height: 3rem;

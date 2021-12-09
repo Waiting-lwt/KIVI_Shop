@@ -27,7 +27,7 @@
             <div class="item-num-update" @click="addToCart(item.goodId,index)">+</div>
           </div>
           <div class="item-prices">￥ {{item.goodPrice*item.goodNum}}</div>
-          <div class="item-op">
+          <div class="item-op" @click="deleteCart(item.goodId)">
             <div>删除</div>
           </div>
         </div>
@@ -35,7 +35,8 @@
 
       <div class="buttom-block">
       <div class="buttom-block-left">
-        全选
+        <span style="cursor: pointer;" @click="selectAll()">
+          全选</span>
       </div>
       <div class="buttom-block-empty">
       </div>
@@ -49,21 +50,21 @@
       <div class="buttom-block-right">
           <span>合计</span>
           <span style="color: #a80024;font-size:600;">
-            {{totalPrice()}}
+            {{totalPrice}}
           </span>
           <span>元</span>
       </div>
       <div class="buttom-block-pay" @click="showPay=true">
         结算
       </div>
-    </div>
+      </div>
     </div>
 
     <div class="modal-mask" v-if="showPay" @click="showPay=false"></div>
     <div class="modal-block" v-if="showPay">
-        <div>确定后打钱！</div>
-        <div>发订单邮件到你的邮箱啦！</div>
-        <button @click="confirmPay">确定</button>
+        <div>打钱！</div>
+        <div>打钱后发订单邮件到你的邮箱嗷！</div>
+        <button @click="confirmPay">打钱啦</button>
         <button @click="deletePay">取消</button>
     </div>
 
@@ -94,6 +95,16 @@ export default {
     // 2. 不能操作DOM的
     // console.log(this.msg);
     // console.log(document.getElementsByTagName("li"))
+  },
+  computed: {
+    totalPrice () {
+      var totalPrice = 0
+      var self = this
+      this.selectedIndex.forEach(function (item) {
+        totalPrice += self.cartsList[item].goodPrice * self.cartsList[item].goodNum
+      })
+      return totalPrice
+    }
   },
   methods: {
     getCart () {
@@ -184,16 +195,18 @@ export default {
         this.selectedIndex.push(index)
       }
     },
+    selectAll () {
+      this.cartsList.forEach((item, index) => {
+        let indexs = this.selectedIndex.indexOf(index)
+        if (indexs >= 0) {
+          this.selectedIndex.splice(indexs, 1)
+        } else {
+          this.selectedIndex.push(index)
+        }
+      })
+    },
     selectedOrNot (index) {
       return this.selectedIndex.indexOf(index)
-    },
-    totalPrice () {
-      var totalPrice = 0
-      var self = this
-      this.selectedIndex.forEach(function (item) {
-        totalPrice += self.cartsList[item].goodPrice * self.cartsList[item].goodNum
-      })
-      return totalPrice
     },
     confirmPay () {
       var selectCarts = []
@@ -203,17 +216,22 @@ export default {
       })
       console.log(this.userId)
       console.log(selectCarts)
+      let time = new Date().getTime().toString().substring(0, 10)
       var data = {
         method: 'POST',
         dataType: 'json',
         url: '/user/addOrder',
         params: {
-          userId: this.userId
+          userId: this.userId,
+          orderTime: time
         },
         data: selectCarts
       }
       this.$request(data).then(res => {
         console.log(res)
+        alert('订单生成欧克啦')
+        self.getCart()
+        this.selectedIndex = []
       }).catch(_err => {
         console.log(_err)
       })
@@ -221,6 +239,23 @@ export default {
     },
     deletePay () {
       this.showPay = false
+    },
+    deleteCart (goodId) {
+      var self = this
+      let data = {
+        method: 'PUT',
+        url: '/user/deleteCart',
+        data: {
+          userId: Number(window.sessionStorage.getItem('userId')),
+          goodId: goodId
+        }
+      }
+      this.$request(data).then(res => {
+        console.log(res)
+        self.getCart()
+      }).catch(_err => {
+        console.log(_err)
+      })
     }
   },
   // 执行之前，判断是否有el,template;编译
@@ -286,9 +321,8 @@ export default {
   height: 180px;
   background-color: #ffffff;
   z-index: 30;
-  position: absolute;
-  left: 547px;
-  top: 261px;
+  left: 35%;
+  top: 5px;
   overflow: hidden;
 }
 .title{
@@ -362,6 +396,7 @@ export default {
 }
 .item-name{
   width: 17.5rem;
+  height: 2.5rem;
   text-align: left;
   cursor: pointer;
 }
@@ -387,6 +422,8 @@ export default {
 }
 .item-op{
   width: 10rem;
+  height: 1rem;
+  cursor: pointer;
 }
 .buttom-block{
   position: fixed;
@@ -412,6 +449,7 @@ export default {
   padding-right: 1rem;
 }
 .buttom-block-pay{
+  cursor: pointer;
   width: 10rem;
   text-align: center;
   height: 3rem;

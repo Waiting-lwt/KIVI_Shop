@@ -2,7 +2,7 @@
   <div id="browseLog">
     <div class="title">
       <div class="title-goodInfo">商品信息</div>
-      <div class="title-userInfo">用户</div>
+      <div class="title-userInfo">买家</div>
       <div class="title-browseTime">浏览时间</div>
     </div>
 
@@ -102,7 +102,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #browseLog{
   z-index: 15;
   margin: 2rem 0 0 15rem;

@@ -31,7 +31,7 @@ export default {
     return {
       goodsList: [],
       search_content: '',
-      inputSearch: this.fangdou_search()
+      utSearch: this.fangdou_search()
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -75,6 +75,7 @@ export default {
     //   this.dou()
     // },
     toGoodDetail (id) {
+      console.log(id)
       this.$router.push({
         name: `good_detail`,
         params: {
@@ -135,7 +136,8 @@ export default {
 
 <style scoped>
 #home {
-  width: 1280px
+  width: 1280px;
+  margin: 0 auto;
 }
 .title {
   margin: 2rem 5rem 2rem 5rem;
@@ -182,10 +184,10 @@ input {
   margin: 0rem 2rem 2rem 5rem;
   width: 100%;
   height: 100%;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 }
 .good-item {
-  display: inline-block;
   margin: 1rem 2rem 1rem 0;
   width: 13rem;
   height: 18rem;
@@ -203,6 +205,7 @@ input {
   display: block;
   width: 100%;
   height: 100%;
+  cursor: pointer;
   /* box-shadow: 0rem .1rem .5rem #000; */
 }
 .item-block {
@@ -229,8 +232,8 @@ input {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   display: -webkit-box;
+  cursor: pointer;
 
-  /* display: block; */
   line-height: 1.2rem;
   height: 2.5rem;
   overflow: hidden;

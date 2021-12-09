@@ -64,7 +64,7 @@ export default {
   width: 100%;
 }
 .nav-left{
-  position: fixed;
+  position: absolute;
   z-index: 20;
   left: 0;
   top: 6rem;

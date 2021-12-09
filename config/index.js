@@ -15,7 +15,7 @@ module.exports = {
         // target: 'http://47.106.104.174:8080',      // 你接口的域名
         target: 'http://localhost:8080',
         changeOrigin: true,
-        pathRewrite:{
+        pathRewrite: {
           '^/api': ''
         }
       }

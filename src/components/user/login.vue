@@ -56,6 +56,8 @@ export default {
         this.password = ''
         window.sessionStorage.setItem('userId', Number(res.data.userId))
         window.sessionStorage.setItem('userType', Number(res.data.userType))
+        window.sessionStorage.setItem('userName', res.data.userName)
+        console.log(window.sessionStorage.getItem('userName'))
         this.$router.push({
           name: `home`
         })

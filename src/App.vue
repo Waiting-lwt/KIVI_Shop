@@ -1,22 +1,50 @@
 <template>
   <div id="app">
     <div class="navbar">
-      <a class="home-link" href="/">KIVI</a>
-      <div class="nav-links">
-        <div class="nav-item" v-if="!hasLogin()">
-          <a class="nav-link" href="/user/login/">你好，请登录</a>
-          <a class="nav-link" href="/user/register">前往注册</a>
-        </div>
-        <div class="nav-item" v-if="hasLogin()==1">
-          <a class="nav-link" href="/user/buyer/">用户中心</a>
-          <a class="nav-link" href="/user/login/">切换用户</a>
-        </div>
-        <div class="nav-item" v-if="hasLogin()==2">
-          <a class="nav-link" href="/user/seller/">商户中心</a>
-          <a class="nav-link" href="/user/login/">切换用户</a>
-        </div>
-        <div class="nav-item">
-          <a class="nav-link" href="/user/cart">购物车</a>
+      <div class="navbar-link">
+        <a class="home-link" href="/">KIVI</a>
+        <div class="nav-links">
+          <template v-if="!hasLogin()">
+            <div class="nav-item">
+              <a class="nav-link" href="/user/login/">你好，请登录</a>
+            </div>
+            <div class="nav-item">
+              <a class="nav-link" href="/user/register">前往注册</a>
+            </div>
+          </template>
+          <template v-if="hasLogin()==1">
+            <div class="nav-item">
+              <a class="nav-link" href="/user/buyer/">用户中心</a>
+            </div>
+            <div class="nav-item"
+             :class="{'hover_userFloatShow': userFloatSeen}"
+              @mouseleave="hideUserFloat">
+              <a class="nav-link-user"
+               @mouseenter="showUserFloat"
+              >{{userName}}</a>
+              <div class="hover_userFloat">
+                <div class="nav-link" @click="deleteUser()">注销用户</div>
+              </div>
+            </div>
+          </template>
+          <template v-if="hasLogin()==2">
+            <div class="nav-item">
+              <a class="nav-link" href="/user/seller/">商户中心</a>
+            </div>
+            <div class="nav-item"
+             :class="{'hover_userFloatShow': userFloatSeen}"
+              @mouseleave="hideUserFloat">
+              <a class="nav-link-user"
+               @mouseenter="showUserFloat"
+              >{{userName}}</a>
+              <div class="hover_userFloat">
+                <div class="nav-link" @click="deleteUser()">注销用户</div>
+              </div>
+            </div>
+          </template>
+          <div class="nav-item">
+            <a class="nav-link" href="/user/cart">购物车</a>
+          </div>
         </div>
       </div>
     </div>
@@ -33,6 +61,12 @@ export default {
   },
   data () {
     return {
+      userFloatSeen: false
+    }
+  },
+  computed: {
+    userName () {
+      return window.sessionStorage.getItem('userName')
     }
   },
   methods: {
@@ -44,9 +78,22 @@ export default {
         return 0
       }
       return 0
+    },
+    showUserFloat () {
+      this.userFloatSeen = true
+    },
+    hideUserFloat () {
+      this.userFloatSeen = false
+    },
+    deleteUser () {
+      this.userFloatSeen = false
+      window.sessionStorage.clear()
     }
   },
   filters: {
+  },
+  mounted () {
+    console.log(window.sessionStorage.getItem('userName'))
   }
 }
 </script>
@@ -65,12 +112,17 @@ export default {
   color: #2c3e50;
 }
 .navbar{
+  width: 100%;
   z-index: 10;
   right: 0;
   height: 3.6rem;
   background-color: #fff;
   box-sizing: border-box;
   border-bottom: 1px solid #eaecef;
+}
+.navbar-link{
+  width: 1280px;
+  margin: 0 auto;
 }
 .home-link {
   display: inline-block;
@@ -86,24 +138,39 @@ export default {
 }
 .nav-link{
   color: #2c3e50;
+  text-decoration: none;
+  cursor: pointer;
+}
+.nav-link-user{
+  color: #2c3e50;
   padding: 0.6rem;
   text-decoration: none;
+  cursor: pointer;
 }
 .nav-links{
-  display: inline-block;
-  position: absolute;
-  padding: 0.6rem;
-  top: 0.6rem;
-  right: 3rem;
-  /* left: 20rem; */
-  height: 1rem;
+  float: right;
+  position: relative;
   font-size: .9rem;
-  line-height: 1rem;
+  line-height: 3.5rem;
   text-align: center;
 }
 .nav-item{
-  display: inline-block;
+  float: left;
+  width: 6rem;
   color: #2c3e50;
   text-decoration: none;
+  text-align: center;
+}
+.hover_userFloat{
+  position: absolute;
+  display: none;
+  margin-top: -15px;
+  border: 1px solid #f1f1f1;
+  background-color: #fff;
+  height: 3.5rem;
+  width: 5rem;
+}
+.hover_userFloatShow .hover_userFloat{
+  display: block;
 }
 </style>
