@@ -179,14 +179,14 @@ export default {
   margin: 5rem auto 5rem auto;
   padding: 0rem 5rem 0rem 5rem;
 }
-.good-item {
+.good-block .good-item {
   display: flex;
   margin: 1rem 2rem 1rem 0;
   width: 50rem;
   height: 25rem;
   position: relative;
 }
-.item-img {
+.good-block .good-item .item-img {
   display: block;
   width: 22rem;
   height: 22rem;
@@ -194,27 +194,26 @@ export default {
   margin-top: 0rem;
   border: 1px solid #b9bbbe;
 }
-.item-pic {
+.good-block .good-item .item-img .item-pic {
   display: block;
   width: 100%;
   height: 100%;
 }
-.item-block {
+.good-block .good-item .item-block {
   display: block;
   height: 20rem;
 }
-.item-detail {
+.good-block .good-item .item-block .item-detail {
   padding: 0.5rem 1.5rem 0.5rem 1.5rem;
   width: 24rem;
   height: 20rem;
 }
 
-.item-detail .item-title {
+.good-block .good-item .item-block .item-detail .item-title {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   display: -webkit-box;
 
-  /* display: block; */
   line-height: 1.7rem;
   height: 3.5rem;
   overflow: hidden;
@@ -222,7 +221,7 @@ export default {
   padding-bottom: 0.5rem;
   color: #182941;
 }
-.item-detail .item-payment {
+.good-block .good-item .item-block .item-detail .item-payment {
   display: block;
   line-height: 3rem;
   height: 3rem;
@@ -231,7 +230,7 @@ export default {
   color: #a80024;
   font-weight: 600;
 }
-.item-detail .item-num {
+.good-block .good-item .item-block .item-detail .item-num {
   display: block;
   margin: 0.5rem 0 0.5rem 0;
   line-height: 1.5rem;
@@ -239,7 +238,7 @@ export default {
   font-size: 0.8rem;
   color: #5a677a;
 }
-.item-detail .item-seller {
+.good-block .good-item .item-block .item-detail .item-seller {
   display: block;
   margin: 0.5rem 0 0.5rem 0;
   line-height: 1.5rem;
@@ -247,7 +246,7 @@ export default {
   font-size: 0.8rem;
   color: #5a677a;
 }
-button{
+.good-block .good-item .item-block .item-detail button{
   display: inline-block;
   height: 2.5rem;
   width: 11rem;
@@ -257,26 +256,31 @@ button{
   color: aliceblue;
   cursor: pointer;
 }
-.good-detail{
+.good-block .good-detail{
   display: block;
   border: 1px solid #93a1af;
 }
-.intro-title{
+.good-block .good-detail .intro-title{
   line-height: 2rem;
   color: #182941;
 }
-.intro-content{
+.good-block .good-detail .intro-content{
   font-size: 13px;
   line-height: 1.2rem;
   padding: 1.0rem;
 }
-.tabbar{
+.good-block .good-detail .detail-title{
+  display: block;
+}
+.good-block .good-detail .detail-title ul{
   width: 100%;
   position: relative;
   height: 48px;
   border: 1px solid #dfdfdf;
+  margin: 0 0 0 0;
+  padding: 0;
 }
-.tabbar li {
+.good-block .good-detail .detail-title ul li {
   float: left;
   height: 48px;
   line-height: 48px;

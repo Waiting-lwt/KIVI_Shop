@@ -12,10 +12,12 @@ if (process.env.NODE_ENV === 'development') {
   // 编译环境
   if (process.env.type === 'test') {
     // 测试环境
-    baseURL = 'http://47.106.104.174:8080'
+    baseURL = '/api'
+    // baseURL = 'http://localhost:8080'
   } else { // production
     // 正式环境
-    baseURL = 'http://47.106.104.174:8080'
+    baseURL = '/api'
+    // baseURL = 'http://localhost:8080'
   }
 }
 // 配置axios的属性

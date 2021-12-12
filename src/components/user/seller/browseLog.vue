@@ -102,7 +102,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #browseLog{
   z-index: 15;
   margin: 2rem 0 0 15rem;

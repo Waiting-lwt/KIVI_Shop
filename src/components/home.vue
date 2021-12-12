@@ -139,14 +139,14 @@ export default {
   width: 1280px;
   margin: 0 auto;
 }
-.title {
+#home .title {
   margin: 2rem 5rem 2rem 5rem;
   display: block;
   overflow: hidden;
   height: 4rem;
   width: 100%;
 }
-.title-icon {
+.title .title-icon {
   display: inline-block;
   font-size: 2rem;
   line-height: 4rem;
@@ -154,7 +154,7 @@ export default {
   margin: 0rem 3rem 0rem 1rem;
   vertical-align: 25%;
 }
-.search-block {
+.title .search-block {
   overflow: hidden;
   display: inline-block;
   height: 3rem;
@@ -165,7 +165,7 @@ export default {
   border: 1px solid rgb(204, 204, 204);
   border-radius: 1.5rem;
 }
-input {
+.title .search-block input {
   height: 100%;
   width: 85%;
   font-size: 1rem;
@@ -173,7 +173,7 @@ input {
   border: none;
   outline: none;
 }
-.search-icon {
+.title .search-block .search-icon {
   display: inline-block;
   text-align: center;
   width: 4rem;
@@ -187,36 +187,36 @@ input {
   display: flex;
   flex-wrap: wrap;
 }
-.good-item {
+.goods-list .good-item {
   margin: 1rem 2rem 1rem 0;
   width: 13rem;
   height: 18rem;
   border: 1px solid #b9bbbe;
   position: relative;
 }
-.item-img {
+.goods-list .good-item .item-img {
   display: block;
   width: 13rem;
   height: 13rem;
   margin-left: 0rem;
   margin-top: 0rem;
 }
-.item-pic {
+.goods-list .good-item .item-img .item-pic {
   display: block;
   width: 100%;
   height: 100%;
   cursor: pointer;
   /* box-shadow: 0rem .1rem .5rem #000; */
 }
-.item-block {
+.goods-list .good-item .item-block {
   display: block;
   height: 3rem;
 }
-.item-detail {
+.goods-list .good-item .item-block .item-detail {
   padding: 0.5rem;
   height: 3rem;
 }
-.item-detail .item-payment {
+.goods-list .good-item .item-block .item-detail .item-payment {
   display: block;
   line-height: 1rem;
   height: 1rem;
@@ -225,7 +225,7 @@ input {
   color: #a80024;
   font-weight: 600;
 }
-.item-detail .item-title {
+.goods-list .good-item .item-block .item-detail .item-title {
   /* 显示两行, 多出部分以"..."代替 */
   overflow: hidden;
   -webkit-line-clamp: 2;
@@ -241,7 +241,7 @@ input {
   padding-top: 0.5rem;
   color: #182941;
 }
-.item-detail .item-title:hover{
+.goods-list .good-item .item-block .item-detail .item-title:hover{
   color: #a75667;
   text-decoration:underline;
 }

@@ -2,19 +2,23 @@
   <div id="app">
     <div class="navbar">
       <div class="navbar-link">
-        <a class="home-link" href="/">KIVI</a>
+        <router-link class="home-link" to="/">KIVI</router-link>
+        <!-- <a class="home-link" href="/">KIVI</a> -->
         <div class="nav-links">
           <template v-if="!hasLogin()">
             <div class="nav-item">
-              <a class="nav-link" href="/user/login/">你好，请登录</a>
+              <router-link class="nav-link" to="/user/login">你好，请登录</router-link>
+              <!-- <a class="nav-link" href="/user/login">你好，请登录</a> -->
             </div>
             <div class="nav-item">
-              <a class="nav-link" href="/user/register">前往注册</a>
+              <router-link class="nav-link" to="/user/register">前往注册</router-link>
+              <!-- <a class="nav-link" href="/user/register">前往注册</a> -->
             </div>
           </template>
           <template v-if="hasLogin()==1">
             <div class="nav-item">
-              <a class="nav-link" href="/user/buyer/">用户中心</a>
+              <router-link class="nav-link" to="/user/buyer">用户中心</router-link>
+              <!-- <a class="nav-link" href="/user/buyer">用户中心</a> -->
             </div>
             <div class="nav-item"
              :class="{'hover_userFloatShow': userFloatSeen}"
@@ -29,7 +33,8 @@
           </template>
           <template v-if="hasLogin()==2">
             <div class="nav-item">
-              <a class="nav-link" href="/user/seller/">商户中心</a>
+              <router-link class="nav-link" to="/user/seller">商户中心</router-link>
+              <!-- <a class="nav-link" href="/user/seller/">商户中心</a> -->
             </div>
             <div class="nav-item"
              :class="{'hover_userFloatShow': userFloatSeen}"
@@ -43,7 +48,8 @@
             </div>
           </template>
           <div class="nav-item">
-            <a class="nav-link" href="/user/cart">购物车</a>
+            <router-link class="nav-link" to="/user/cart">购物车</router-link>
+            <!-- <a class="nav-link" href="/user/cart">购物车</a> -->
           </div>
         </div>
       </div>
@@ -52,7 +58,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import seller from '@/components/user/seller'
 export default {
   name: 'App',
@@ -86,8 +92,11 @@ export default {
       this.userFloatSeen = false
     },
     deleteUser () {
-      this.userFloatSeen = false
       window.sessionStorage.clear()
+      this.$router.push({
+        path: '/'
+      })
+      this.userFloatSeen = false
     }
   },
   filters: {
@@ -98,7 +107,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 *{
   margin: 0;
   padding: 0;
@@ -120,11 +129,11 @@ export default {
   box-sizing: border-box;
   border-bottom: 1px solid #eaecef;
 }
-.navbar-link{
+.navbar .navbar-link{
   width: 1280px;
   margin: 0 auto;
 }
-.home-link {
+.navbar .navbar-link .home-link {
   display: inline-block;
   position: relative;
   padding: 0.6rem;
@@ -136,32 +145,32 @@ export default {
   color: #2c3e50;
   text-decoration: none;
 }
-.nav-link{
+.navbar .navbar-link .nav-links .nav-item .nav-link{
   color: #2c3e50;
   text-decoration: none;
   cursor: pointer;
 }
-.nav-link-user{
+.navbar .navbar-link .nav-links .nav-item .nav-link-user{
   color: #2c3e50;
   padding: 0.6rem;
   text-decoration: none;
   cursor: pointer;
 }
-.nav-links{
+.navbar .navbar-link .nav-links{
   float: right;
   position: relative;
   font-size: .9rem;
   line-height: 3.5rem;
   text-align: center;
 }
-.nav-item{
+.navbar .navbar-link .nav-links .nav-item{
   float: left;
   width: 6rem;
   color: #2c3e50;
   text-decoration: none;
   text-align: center;
 }
-.hover_userFloat{
+.navbar .navbar-link .nav-links .nav-item .hover_userFloat{
   position: absolute;
   display: none;
   margin-top: -15px;
@@ -170,7 +179,7 @@ export default {
   height: 3.5rem;
   width: 5rem;
 }
-.hover_userFloatShow .hover_userFloat{
+.navbar .navbar-link .nav-links .hover_userFloatShow .hover_userFloat{
   display: block;
 }
 </style>
