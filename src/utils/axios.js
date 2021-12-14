@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 axios.defaults.timeout = 6000 // 请求超时时间1分钟
 axios.defaults.baseURL = baseURL // 你的接口地址
 axios.defaults.responseType = 'json'
-axios.defaults.withCredentials = false // 是否允许带cookie这些
+axios.defaults.withCredentials = true // 是否允许带cookie这些
 
 /* 你也可以创建一个实例，然后在实例中配置相关属性，此方法和上面的方法一样，写法不同，怎么用随个人
  *喜好，我比较喜欢用这种方法，如下：

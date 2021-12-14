@@ -5,7 +5,7 @@
         <router-link class="home-link" to="/">KIVI</router-link>
         <!-- <a class="home-link" href="/">KIVI</a> -->
         <div class="nav-links">
-          <template v-if="!hasLogin()">
+          <template v-if="!userName">
             <div class="nav-item">
               <router-link class="nav-link" to="/user/login">你好，请登录</router-link>
               <!-- <a class="nav-link" href="/user/login">你好，请登录</a> -->
@@ -15,7 +15,7 @@
               <!-- <a class="nav-link" href="/user/register">前往注册</a> -->
             </div>
           </template>
-          <template v-if="hasLogin()==1">
+          <template v-if="userType==1">
             <div class="nav-item">
               <router-link class="nav-link" to="/user/buyer">用户中心</router-link>
               <!-- <a class="nav-link" href="/user/buyer">用户中心</a> -->
@@ -31,7 +31,7 @@
               </div>
             </div>
           </template>
-          <template v-if="hasLogin()==2">
+          <template v-if="userType==2">
             <div class="nav-item">
               <router-link class="nav-link" to="/user/seller">商户中心</router-link>
               <!-- <a class="nav-link" href="/user/seller/">商户中心</a> -->
@@ -73,18 +73,12 @@ export default {
   computed: {
     userName () {
       return window.sessionStorage.getItem('userName')
+    },
+    userType () {
+      return window.sessionStorage.getItem('userType')
     }
   },
   methods: {
-    hasLogin () {
-      if (window.sessionStorage.getItem('userId')) {
-        if (window.sessionStorage.getItem('userType')) {
-          return window.sessionStorage.getItem('userType')
-        }
-        return 0
-      }
-      return 0
-    },
     showUserFloat () {
       this.userFloatSeen = true
     },
@@ -93,6 +87,18 @@ export default {
     },
     deleteUser () {
       window.sessionStorage.clear()
+      var strCookie = document.cookie
+      var arrCookie = strCookie.split(';') // 将多cookie切割为多个名/值对
+      for (var i = 0; i < arrCookie.length; i++) {
+        var arr = arrCookie[i].split('=')
+        if (arr.length > 0) {
+          // DelCookie(arr[0])
+          var d = new Date()
+          d.setTime(d.getTime() + (-1 * 24 * 60 * 60 * 1000))
+          var expires = 'expires=' + d.toUTCString()
+          document.cookie = arr[0] + '=' + '' + ';' + expires
+        }
+      }
       this.$router.push({
         path: '/'
       })
@@ -101,8 +107,18 @@ export default {
   },
   filters: {
   },
+  beforeCreate () {
+    var strcookie = document.cookie // 获取cookie字符串
+    var arrcookie = strcookie.split(';') // 分割
+    // 遍历匹配
+    for (var i = 0; i < arrcookie.length; i++) {
+      var arr = arrcookie[i].split('=')
+      window.sessionStorage.setItem(arr[0], arr[1])
+    }
+  },
+  create () {
+  },
   mounted () {
-    console.log(window.sessionStorage.getItem('userName'))
   }
 }
 </script>

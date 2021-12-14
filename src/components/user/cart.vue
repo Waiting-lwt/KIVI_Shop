@@ -75,7 +75,6 @@
 export default {
   data () {
     return {
-      userId: 0,
       cartsList: [],
       selectedIndex: [],
       showPay: false
@@ -110,10 +109,7 @@ export default {
     getCart () {
       let data = {
         method: 'GET',
-        url: '/user/getCart',
-        params: {
-          userId: this.userId
-        }
+        url: '/user/getCart'
       }
       this.$request(data).then(res => {
         this.cartsList = res.data
@@ -131,61 +127,45 @@ export default {
       })
     },
     addToCart (id, index) {
-      if (!window.sessionStorage.getItem('userId')) {
-        this.$router.push({
-          name: `user_login`
-        })
-      } else {
-        console.log(window.sessionStorage.getItem('userId'))
-        let time = new Date().getTime().toString().slice(0, 10)
-        let data = {
-          method: 'PUT',
-          url: '/user/addCart',
-          data: {
-            goodId: id,
-            userId: Number(window.sessionStorage.getItem('userId')),
-            goodNum: 1,
-            addTime: time
-          }
+      let time = new Date().getTime().toString().slice(0, 10)
+      let data = {
+        method: 'PUT',
+        url: '/user/addCart',
+        data: {
+          goodId: id,
+          goodNum: 1,
+          addTime: time
         }
-        this.$request(data).then(res => {
-          console.log(res.data)
-          this.cartsList[index].goodNum += 1
-        }).catch(_err => {
-          console.log(_err)
-        })
       }
+      this.$request(data).then(res => {
+        console.log(res.data)
+        this.cartsList[index].goodNum += 1
+      }).catch(_err => {
+        console.log(_err)
+      })
     },
     subToCart (id, index) {
-      if (!window.sessionStorage.getItem('userId')) {
-        this.$router.push({
-          name: `person_login`
-        })
-      } else {
-        console.log(window.sessionStorage.getItem('userId'))
-        let time = new Date().getTime().toString().slice(0, 10)
-        let data = {
-          method: 'PUT',
-          url: '/user/subCart',
-          data: {
-            goodId: id,
-            userId: Number(window.sessionStorage.getItem('userId')),
-            goodNum: 1,
-            addTime: time
-          }
+      let time = new Date().getTime().toString().slice(0, 10)
+      let data = {
+        method: 'PUT',
+        url: '/user/subCart',
+        data: {
+          goodId: id,
+          goodNum: 1,
+          addTime: time
         }
-        this.$request(data).then(res => {
-          if (res.data === -1) {
-            alert('该商品已经下架！')
-          } else if (res.data === 0) {
-            alert('数据库错误！')
-          }
-          console.log(res.data)
-          this.cartsList[index].goodNum -= 1
-        }).catch(_err => {
-          console.log(_err)
-        })
       }
+      this.$request(data).then(res => {
+        if (res.data === -1) {
+          alert('该商品已经下架！')
+        } else if (res.data === 0) {
+          alert('数据库错误！')
+        }
+        console.log(res.data)
+        this.cartsList[index].goodNum -= 1
+      }).catch(_err => {
+        console.log(_err)
+      })
     },
     select (index) {
       var indexs = this.selectedIndex.indexOf(index)
@@ -214,7 +194,6 @@ export default {
       this.selectedIndex.forEach(function (item, index) {
         selectCarts.push(self.cartsList[item])
       })
-      console.log(this.userId)
       console.log(selectCarts)
       let time = new Date().getTime().toString().substring(0, 10)
       var data = {
@@ -222,7 +201,6 @@ export default {
         dataType: 'json',
         url: '/user/addOrder',
         params: {
-          userId: this.userId,
           orderTime: time
         },
         data: selectCarts
@@ -246,7 +224,6 @@ export default {
         method: 'PUT',
         url: '/user/deleteCart',
         data: {
-          userId: Number(window.sessionStorage.getItem('userId')),
           goodId: goodId
         }
       }
@@ -267,13 +244,10 @@ export default {
     // 挂载： 把VUE实例生成的虚拟的DOM转成真实的DOM，放在了页面中，这就是挂载；
     // 编译出的DOM把原有的DOM替换完毕；
     // 可以获取最终的DOM元素
-    if (!window.sessionStorage.getItem('userId')) {
+    if (!window.sessionStorage.getItem('userName')) {
       this.$router.push({
         name: `user_login`
       })
-    } else {
-      this.userId = window.sessionStorage.getItem('userId')
-      console.log(this.userId)
     }
     this.getCart()
   },

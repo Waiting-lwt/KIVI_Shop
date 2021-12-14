@@ -71,9 +71,6 @@ export default {
         }, 600)
       }
     },
-    // inputSearch () {
-    //   this.dou()
-    // },
     toGoodDetail (id) {
       console.log(id)
       this.$router.push({
@@ -114,6 +111,13 @@ export default {
     // 挂载： 把VUE实例生成的虚拟的DOM转成真实的DOM，放在了页面中，这就是挂载；
     // 编译出的DOM把原有的DOM替换完毕；
     // 可以获取最终的DOM元素
+    var strcookie = document.cookie // 获取cookie字符串
+    var arrcookie = strcookie.split('; ') // 分割
+    // 遍历匹配
+    for (var i = 0; i < arrcookie.length; i++) {
+      var arr = arrcookie[i].split('=')
+      window.sessionStorage.setItem(arr[0], arr[1])
+    }
     this.getGoods()
   },
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行

@@ -26,7 +26,6 @@
 export default {
   data () {
     return {
-      userId: 0,
       browsesList: []
     }
   },
@@ -40,10 +39,7 @@ export default {
     getSellerBrowse () {
       let data = {
         method: 'GET',
-        url: '/user/getUserBrowsed',
-        params: {
-          userId: this.userId
-        }
+        url: '/user/getUserBrowsed'
       }
       this.$request(data).then(res => {
         this.browsesList = res.data
@@ -74,13 +70,12 @@ export default {
   },
   // 挂载完毕
   mounted () {
-    if (!window.sessionStorage.getItem('userId')) {
+    if (!window.sessionStorage.getItem('userName')) {
       this.$router.push({
         name: `user_login`
       })
     } else {
-      this.userId = window.sessionStorage.getItem('userId')
-      console.log(this.userId)
+      console.log(this.userName)
     }
     this.getSellerBrowse()
   },

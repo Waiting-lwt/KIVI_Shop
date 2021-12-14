@@ -54,9 +54,13 @@ export default {
         alert('成功登录！')
         this.name = ''
         this.password = ''
-        window.sessionStorage.setItem('userId', Number(res.data.userId))
-        window.sessionStorage.setItem('userType', Number(res.data.userType))
-        window.sessionStorage.setItem('userName', res.data.userName)
+        var strcookie = document.cookie // 获取cookie字符串
+        var arrcookie = strcookie.split(';') // 分割
+        // 遍历匹配
+        for (var i = 0; i < arrcookie.length; i++) {
+          var arr = arrcookie[i].split('=')
+          window.sessionStorage.setItem(arr[0], arr[1])
+        }
         console.log(window.sessionStorage.getItem('userName'))
         this.$router.push({
           name: `home`
