@@ -55,15 +55,17 @@ export default {
         this.name = ''
         this.password = ''
         var strcookie = document.cookie // 获取cookie字符串
-        var arrcookie = strcookie.split(';') // 分割
+        var arrcookie = strcookie.split('; ') // 分割
         // 遍历匹配
         for (var i = 0; i < arrcookie.length; i++) {
           var arr = arrcookie[i].split('=')
+          console.log(arr[0], arr[1], arr[0] === 'userType')
           window.sessionStorage.setItem(arr[0], arr[1])
+          window.sessionStorage.getItem(arr[0])
         }
         console.log(window.sessionStorage.getItem('userName'))
-        this.$router.push({
-          name: `home`
+        this.$router.replace({
+          path: '/'
         })
       }).catch(_err => {
         console.log(_err)

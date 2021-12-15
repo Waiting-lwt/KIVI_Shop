@@ -113,30 +113,23 @@ export default {
       alert('暂未开放')
     },
     addToCart () {
-      if (!window.sessionStorage.getItem('userId')) {
-        this.$router.push({
-          name: `person_login`
-        })
-      } else {
-        console.log(window.sessionStorage.getItem('userId'))
-        let time = new Date().getTime().toString().slice(0, 10)
-        let data = {
-          method: 'PUT',
-          url: '/user/addCart',
-          data: {
-            goodId: this.goodInfo.goodId,
-            userId: Number(window.sessionStorage.getItem('userId')),
-            goodNum: 1,
-            addTime: time
-          }
+      let time = new Date().getTime().toString().slice(0, 10)
+      let data = {
+        method: 'PUT',
+        url: '/user/addCart',
+        data: {
+          goodId: this.goodInfo.goodId,
+          userId: Number(window.sessionStorage.getItem('userId')),
+          goodNum: 1,
+          addTime: time
         }
-        this.$request(data).then(res => {
-          console.log(res.data)
-          alert('已加购物车！')
-        }).catch(_err => {
-          console.log(_err)
-        })
       }
+      this.$request(data).then(res => {
+        console.log(res.data)
+        alert('已加购物车！')
+      }).catch(_err => {
+        console.log(_err)
+      })
     }
   },
   // 执行之前，判断是否有el,template;编译

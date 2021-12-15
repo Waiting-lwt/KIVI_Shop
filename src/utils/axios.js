@@ -1,5 +1,6 @@
 /* 1.引入文件 */
 import axios from 'axios' // 引入 axios库
+import router from '../router'
 // import qs from 'qs' // 引入 node中自带的qs模块（数据格式转换）
 
 /* 2.全局默认配置 */
@@ -57,19 +58,29 @@ Axios.interceptors.request.use(
 // http response 拦截器
 Axios.interceptors.response.use(
   res => {
+    console.log(res)
     // 请求响应后拦截
+    if (res.status === 200) {
+      // 对响应数据做些事
+      console.log(res.code)
+      if (res.data.code === 10010 || res.data.code === 10011) {
+        router.replace({
+          path: '/user/login' // 到登录页重新获取token
+        })
+      } else if (res.data.token) {
+        // 判断token是否存在，如果存在说明需要更新token
+        // Storage.localSet('token', res.data.token) // 覆盖原来的token(默认一天刷新一次)
+      }
+    }
     if (res.status === 200) {
       // 对响应数据做些事
       // alert("提交成功")
       return Promise.resolve(res)
     }
-    if (res.status === 400) {
-      // 对响应数据做些事
-      alert(res.error)
-    }
     return res
   },
   error => {
+    console.log(error.code)
     // alert("网络异常!") 404等问题可以在这里处理
     return Promise.reject(error)
   }

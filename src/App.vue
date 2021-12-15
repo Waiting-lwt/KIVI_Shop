@@ -5,7 +5,7 @@
         <router-link class="home-link" to="/">KIVI</router-link>
         <!-- <a class="home-link" href="/">KIVI</a> -->
         <div class="nav-links">
-          <template v-if="!userName">
+          <template v-if="(!userName||!userType)">
             <div class="nav-item">
               <router-link class="nav-link" to="/user/login">你好，请登录</router-link>
               <!-- <a class="nav-link" href="/user/login">你好，请登录</a> -->
@@ -67,16 +67,20 @@ export default {
   },
   data () {
     return {
-      userFloatSeen: false
+      userFloatSeen: false,
+      userName: window.sessionStorage.getItem('userName'),
+      userType: window.sessionStorage.getItem('userType')
     }
   },
   computed: {
-    userName () {
-      return window.sessionStorage.getItem('userName')
-    },
-    userType () {
-      return window.sessionStorage.getItem('userType')
-    }
+    // userName () {
+    //   console.log(window.sessionStorage.getItem('userName'))
+    //   return window.sessionStorage.getItem('userName')
+    // },
+    // userType () {
+    //   console.log(window.sessionStorage.getItem('userType'))
+    //   return Number(window.sessionStorage.getItem('userType'))
+    // }
   },
   methods: {
     showUserFloat () {
@@ -88,7 +92,7 @@ export default {
     deleteUser () {
       window.sessionStorage.clear()
       var strCookie = document.cookie
-      var arrCookie = strCookie.split(';') // 将多cookie切割为多个名/值对
+      var arrCookie = strCookie.split('; ') // 将多cookie切割为多个名/值对
       for (var i = 0; i < arrCookie.length; i++) {
         var arr = arrCookie[i].split('=')
         if (arr.length > 0) {
@@ -96,12 +100,9 @@ export default {
           var d = new Date()
           d.setTime(d.getTime() + (-1 * 24 * 60 * 60 * 1000))
           var expires = 'expires=' + d.toUTCString()
-          document.cookie = arr[0] + '=' + '' + ';' + expires
+          document.cookie = arr[0] + '=' + '' + '; ' + expires
         }
       }
-      this.$router.push({
-        path: '/'
-      })
       this.userFloatSeen = false
     }
   },
@@ -109,16 +110,28 @@ export default {
   },
   beforeCreate () {
     var strcookie = document.cookie // 获取cookie字符串
-    var arrcookie = strcookie.split(';') // 分割
+    var arrcookie = strcookie.split('; ') // 分割
     // 遍历匹配
     for (var i = 0; i < arrcookie.length; i++) {
       var arr = arrcookie[i].split('=')
-      window.sessionStorage.setItem(arr[0], arr[1])
+      if (arr[0]) {
+        window.sessionStorage.setItem(arr[0], arr[1])
+      }
     }
   },
   create () {
   },
   mounted () {
+  },
+  // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
+  beforeUpdate () {
+    // 更新数据之前执行
+  },
+  updated () {
+    this.userName = window.sessionStorage.getItem('userName')
+    this.userType = window.sessionStorage.getItem('userType')
+    console.log(this.userName)
+    // 数据更新，虚拟的DOM更新，然后更新真实的DOM；最后触发这个函数
   }
 }
 </script>

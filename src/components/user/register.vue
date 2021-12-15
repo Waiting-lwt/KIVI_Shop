@@ -7,7 +7,10 @@
     </div>
     <div class="input-item">
       <span class="input-text">邮箱</span>
-      <input type="text" v-model="email" class="input-block">
+      <input type="text" v-model="email" class="input-block" v-on:input="emailCheck()">
+      <div class="warning-email" v-if="!emailTrue">
+        输入邮箱格式不正确
+      </div>
     </div>
     <div class="input-item">
       <span class="input-text">密码</span>
@@ -28,10 +31,25 @@ export default {
       name: '',
       email: '',
       password: '',
-      password2: ''
+      password2: '',
+      emailCheck: this.emailCheckFD(),
+      emailTrue: true
     }
   },
+  computed: {
+  },
   methods: {
+    emailCheckFD () {
+      var regEmail = /^(\w+)+(\.\w+)*@(\w)+(\.\w+)/
+      var timer = null
+      return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          console.log(this.email, regEmail.test(this.email))
+          this.emailTrue = regEmail.test(this.email)
+        }, 1000)
+      }
+    },
     register () {
       if (this.name === '') {
         alert('请输入账号名')
@@ -86,12 +104,15 @@ export default {
           this.password2 = ''
 
           var strcookie = document.cookie // 获取cookie字符串
-          var arrcookie = strcookie.split(';') // 分割
+          var arrcookie = strcookie.split('; ') // 分割
           // 遍历匹配
           for (var i = 0; i < arrcookie.length; i++) {
             var arr = arrcookie[i].split('=')
             window.sessionStorage.setItem(arr[0], arr[1])
           }
+          this.$router.replace({
+            path: '/'
+          })
         }
       }).catch(_err => {
         console.log(_err)
@@ -114,6 +135,7 @@ export default {
   width: 21rem;
   margin: 2rem auto;
   text-align: center;
+  position: relative;
 }
 .input-text {
   padding-right: 0.5rem;
@@ -136,5 +158,15 @@ button {
   color: aliceblue;
   padding-left: 0.2rem;
 }
-
+.warning-email{
+  position: absolute;
+  top: 2.4rem;
+  left: 4.2rem;
+  text-align: center;
+  color: rgb(255, 91, 91);
+  font-size: 0.5rem;
+  border: 1px solid rgb(255, 76, 76);
+  background-color: rgb(255, 232, 232);
+  padding: 0.1rem;
+}
 </style>
