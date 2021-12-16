@@ -90,16 +90,12 @@ export default {
       })
     },
     addBrowsed () {
-      if (!window.sessionStorage.getItem('userId')) {
-        return
-      }
       let time = new Date().getTime().toString().substring(0, 10)
       let data = {
         method: 'POST',
         url: '/user/addUserBrowsed',
         data: {
           goodId: this.goodInfo.goodId,
-          browserId: window.sessionStorage.getItem('userId'),
           browseTime: time
         }
       }
@@ -119,7 +115,6 @@ export default {
         url: '/user/addCart',
         data: {
           goodId: this.goodInfo.goodId,
-          userId: Number(window.sessionStorage.getItem('userId')),
           goodNum: 1,
           addTime: time
         }

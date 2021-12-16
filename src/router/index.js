@@ -99,11 +99,6 @@ export default new VueRouter({
       component: goodEdit
     },
     {
-      path: '/good/edit',
-      name: 'good_edit',
-      component: goodEdit
-    },
-    {
       path: '/good/add',
       name: 'good_add',
       component: goodAdd

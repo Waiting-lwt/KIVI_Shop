@@ -45,8 +45,6 @@ Axios.interceptors.request.use(
   config => {
     // 发送请求前进行拦截
     // 可在此处配置请求头信息
-    // config.headers['appkey'] = '...'
-    // config.headers['token'] = '...'
     return config
   },
   error => {

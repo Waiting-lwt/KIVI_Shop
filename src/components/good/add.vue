@@ -48,7 +48,6 @@
 export default {
   data () {
     return {
-      userId: 0,
       goodInfo: {},
       goodName: '',
       goodPrice: '',
@@ -82,9 +81,8 @@ export default {
       reader.readAsDataURL(file)
       // 读取完毕后的操作
       reader.onloadend = (e) => {
-        img.src = e.target.result
         // 这里的e.target就是reader
-        // console.log(reader.result)
+        img.src = e.target.result
         // reader.result就是图片的base64字符串
         this.base64 = reader.result
       }
@@ -135,7 +133,6 @@ export default {
         method: 'POST',
         url: '/good/addGood',
         data: {
-          goodSeller: this.userId,
           goodName: this.goodName,
           goodPrice: this.goodPrice,
           goodImg: this.goodImg,
@@ -168,14 +165,6 @@ export default {
   },
   // 挂载完毕
   mounted () {
-    if (!window.sessionStorage.getItem('userId')) {
-      this.$router.push({
-        name: `user_login`
-      })
-    } else {
-      this.userId = window.sessionStorage.getItem('userId')
-      console.log(this.userId)
-    }
   },
   // 当数据更新时，会调用beforeUpdate 和updated钩子函数；上面四个不再运行
   beforeUpdate () {

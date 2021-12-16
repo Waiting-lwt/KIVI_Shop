@@ -103,6 +103,9 @@ export default {
           document.cookie = arr[0] + '=' + '' + '; ' + expires
         }
       }
+      this.$router.push({
+        path: '/'
+      })
       this.userFloatSeen = false
     }
   },

@@ -59,9 +59,9 @@ export default {
         // 遍历匹配
         for (var i = 0; i < arrcookie.length; i++) {
           var arr = arrcookie[i].split('=')
-          console.log(arr[0], arr[1], arr[0] === 'userType')
-          window.sessionStorage.setItem(arr[0], arr[1])
-          window.sessionStorage.getItem(arr[0])
+          if (arr[0]) {
+            window.sessionStorage.setItem(arr[0], arr[1])
+          }
         }
         console.log(window.sessionStorage.getItem('userName'))
         this.$router.replace({

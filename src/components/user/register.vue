@@ -108,7 +108,9 @@ export default {
           // 遍历匹配
           for (var i = 0; i < arrcookie.length; i++) {
             var arr = arrcookie[i].split('=')
-            window.sessionStorage.setItem(arr[0], arr[1])
+            if (arr[0]) {
+              window.sessionStorage.setItem(arr[0], arr[1])
+            }
           }
           this.$router.replace({
             path: '/'
