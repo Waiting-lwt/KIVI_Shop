@@ -1,3 +1,6 @@
+SCUT
+学号：201930342110
+
 # my-project
 
 > A Vue.js project
