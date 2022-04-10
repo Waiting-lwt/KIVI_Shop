@@ -59,7 +59,7 @@
 </template>
 
 <script scoped>
-import seller from '@/components/user/seller'
+import seller from '@/pages/user/seller'
 export default {
   name: 'App',
   components: {

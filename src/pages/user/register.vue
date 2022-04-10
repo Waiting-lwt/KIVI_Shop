@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     emailCheckFD () {
-      var regEmail = /^(\w+)+(\.\w+)*@(\w)+(\.\w+)/
+      var regEmail = /^(\w+)(\.\w+)*@(\d)+(\.\w+)/
       var timer = null
       return function () {
         clearTimeout(timer)

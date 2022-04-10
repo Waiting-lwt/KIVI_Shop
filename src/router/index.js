@@ -3,23 +3,28 @@ import Vue from 'vue'
 // 引入路由依赖
 import VueRouter from 'vue-router'
 // 引入页面组件
-import home from '@/components/home'
-import login from '@/components/user/login'
-import register from '@/components/user/register'
-import cart from '@/components/user/cart'
-import seller from '@/components/user/seller'
-import buyer from '@/components/user/buyer'
-import goodDetail from '@/components/good/detail'
-import goodEdit from '@/components/good/edit'
-import goodAdd from '@/components/good/add'
-import goodDict from '@/components/user/seller/goodDict'
-import sellerOrderLog from '@/components/user/seller/orderLog'
-import sellerBrowseLog from '@/components/user/seller/browseLog'
-import sellReport from '@/components/user/seller/sellReport'
-import buyerOrderLog from '@/components/user/buyer/orderLog'
-import buyerBrowseLog from '@/components/user/buyer/browseLog'
+import home from '@/pages/home'
+import login from '@/pages/user/login'
+import register from '@/pages/user/register'
+import cart from '@/pages/user/cart'
+import seller from '@/pages/user/seller'
+import buyer from '@/pages/user/buyer'
+import goodDetail from '@/pages/good/detail'
+import goodEdit from '@/pages/good/edit'
+import goodAdd from '@/pages/good/add'
+import goodDict from '@/pages/user/seller/goodDict'
+import sellerOrderLog from '@/pages/user/seller/orderLog'
+import sellerBrowseLog from '@/pages/user/seller/browseLog'
+import sellReport from '@/pages/user/seller/sellReport'
+import buyerOrderLog from '@/pages/user/buyer/orderLog'
+import buyerBrowseLog from '@/pages/user/buyer/browseLog'
+import {Toast} from '@/components/Tips/tipsUtil'
 
+// 路由
 Vue.use(VueRouter)
+
+// 消息提示框
+Vue.use(Toast)
 
 export default new VueRouter({
   mode: 'history',

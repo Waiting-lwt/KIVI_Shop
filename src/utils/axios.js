@@ -67,7 +67,6 @@ Axios.interceptors.response.use(
         })
       } else if (res.data.token) {
         // 判断token是否存在，如果存在说明需要更新token
-        // Storage.localSet('token', res.data.token) // 覆盖原来的token(默认一天刷新一次)
       }
     }
     if (res.status === 200) {

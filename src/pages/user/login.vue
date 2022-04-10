@@ -9,6 +9,11 @@
       <span class="input-text">密码</span>
       <input type="password" v-model="password" class="input-block">
     </div>
+    <div class="input-item">
+      <span class="input-text">验证码</span>
+      <input class="inputSingle" type="text" v-model="captcha" length = 1>
+      <div class="buttonCap" @click="getCaptcha">获取验证码</div>
+    </div>
     <button @click="login">登录</button>
   </div>
 </template>
@@ -18,7 +23,8 @@ export default {
   data () {
     return {
       name: '',
-      password: ''
+      password: '',
+      captcha: ''
     }
   },
   methods: {
@@ -70,6 +76,9 @@ export default {
       }).catch(_err => {
         console.log(_err)
       })
+    },
+    getCaptcha () {
+
     }
   }
 }
@@ -85,7 +94,7 @@ export default {
   font-size: 1.3rem;
 }
 .input-item {
-  width: 20rem;
+  width: 25rem;
   margin: 2rem auto;
   text-align: center;
 }
@@ -108,5 +117,19 @@ button {
   background-color: #435a72;
   color: aliceblue;
   padding-left: 0.2rem;
+}
+
+.inputSingle{
+
+}
+
+.buttonCap {
+  display: inline-block;
+  font-size: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  background-color: #9ab5d1;
+  color: aliceblue;
+
+  cursor: pointer;
 }
 </style>

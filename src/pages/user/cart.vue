@@ -54,14 +54,14 @@
           </span>
           <span>元</span>
       </div>
-      <div class="buttom-block-pay" @click="showPay=true">
+      <div class="buttom-block-pay" @click="showPayModal()">
         结算
       </div>
       </div>
     </div>
 
-    <div class="modal-mask" v-if="showPay" @click="showPay=false"></div>
-    <div class="modal-block" v-if="showPay">
+    <div class="modal-mask" v-show="showPay" @click="hidePayModal()"></div>
+    <div class="modal-block" :style="{bottom: num + 'px'}">
         <div>打钱！</div>
         <div>打钱后发订单邮件到你的邮箱嗷！</div>
         <button @click="confirmPay">打钱啦</button>
@@ -77,7 +77,8 @@ export default {
     return {
       cartsList: [],
       selectedIndex: [],
-      showPay: false
+      showPay: false,
+      num: -200
     }
   },
   // 1. 在这个钩子函数执行之前初始化事件以及生命周期
@@ -205,18 +206,20 @@ export default {
         },
         data: selectCarts
       }
+      const toastGetting = this.$showToast('生成订单中', 100000)
       this.$request(data).then(res => {
         console.log(res)
-        alert('订单生成欧克啦')
+        toastGetting.toastOpacity = 0
+        this.$showToast('订单生成欧克啦')
         self.getCart()
         this.selectedIndex = []
       }).catch(_err => {
         console.log(_err)
       })
-      this.showPay = false
+      this.hidePayModal()
     },
     deletePay () {
-      this.showPay = false
+      this.hidePayModal()
     },
     deleteCart (goodId) {
       var self = this
@@ -233,6 +236,16 @@ export default {
       }).catch(_err => {
         console.log(_err)
       })
+    },
+    showPayModal () {
+      this.showPay = true
+      this.num = 200
+    },
+    hidePayModal () {
+      this.num = -200
+      setTimeout(_ => {
+        this.showPay = false
+      }, 500)
     }
   },
   // 执行之前，判断是否有el,template;编译
@@ -274,30 +287,6 @@ export default {
   margin: 0rem;
   height: 100%;
   width: 100%;
-}
-.modal-fixed{
-  position: fixed;
-}
-.modal-mask{
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: #000;
-  opacity: 0.2;
-  z-index: 20;
-  overflow: hidden;
-}
-.modal-block{
-  position: fixed;
-  width: 440px;
-  height: 180px;
-  background-color: #ffffff;
-  z-index: 30;
-  left: 35%;
-  top: 5px;
-  overflow: hidden;
 }
 .title{
   display: flex;
@@ -428,5 +417,27 @@ export default {
   text-align: center;
   height: 3rem;
   background-color: #ad495f;
+}
+/*弹出框*/
+.modal-mask{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.2;
+  z-index: 20;
+  overflow: hidden;
+}
+.modal-block{
+  position: fixed;
+  width: calc(100% - 600px);
+  height: 200px;
+  background-color: #ffffff;
+  z-index: 30;
+  left: 300px;
+  /* overflow: hidden; */
+  transition: bottom .5s ease-out;
 }
 </style>
